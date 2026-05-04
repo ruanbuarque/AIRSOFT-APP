@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#10140f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="MCM Arsenal" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>MCM Arsenal</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="phone-shell">
+      <section class="status-bar" aria-hidden="true">
+        <span>9:41</span>
+        <span>5G 100%</span>
+      </section>
+
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Matilha Caes do Mato</p>
+          <h1>MCM Arsenal</h1>
+        </div>
+        <label class="logo-slot" title="Adicionar logo do MCM">
+          <input id="logoInput" type="file" accept="image/*" />
+          <img id="teamLogo" alt="" />
+          <span id="logoText">Logo<br />MCM</span>
+        </label>
+      </header>
+
+      <section class="summary-grid" aria-label="Resumo do arsenal">
+        <article>
+          <strong id="totalItems">0</strong>
+          <span>equipamentos</span>
+        </article>
+        <article>
+          <strong id="lowStock">0</strong>
+          <span>estoque baixo</span>
+        </article>
+        <article>
+          <strong id="nextEvent">--</strong>
+          <span>proximo evento</span>
+        </article>
+      </section>
+
+      <nav class="tabs" aria-label="Navegacao principal">
+        <button class="tab is-active" data-view="arsenal" aria-label="Arsenal">
+          <span>Arsenal</span>
+        </button>
+        <button class="tab" data-view="stock" aria-label="Suprimentos">
+          <span>Estoque</span>
+        </button>
+        <button class="tab" data-view="wishlist" aria-label="Lista de desejos">
+          <span>Desejos</span>
+        </button>
+        <button class="tab" data-view="calendar" aria-label="Calendario">
+          <span>Agenda</span>
+        </button>
+      </nav>
+
+      <section id="arsenal" class="view is-active">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Inventario</p>
+            <h2>Equipamentos</h2>
+          </div>
+          <button class="icon-button" data-open="itemDialog" aria-label="Adicionar equipamento">+</button>
+        </div>
+        <div class="filter-row">
+          <input id="inventorySearch" type="search" placeholder="Buscar por nome, marca ou tipo" />
+          <select id="categoryFilter" aria-label="Filtrar categoria">
+            <option value="todos">Todos</option>
+            <option>AEG</option>
+            <option>GBB</option>
+            <option>Spring</option>
+            <option>Protecao</option>
+            <option>Vestuario</option>
+            <option>Acessorio</option>
+            <option>Ferramenta</option>
+          </select>
+        </div>
+        <div id="inventoryList" class="list"></div>
+      </section>
+
+      <section id="stock" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Controle rapido</p>
+            <h2>Suprimentos e pecas</h2>
+          </div>
+          <button class="icon-button" data-open="supplyDialog" aria-label="Adicionar suprimento">+</button>
+        </div>
+        <div id="supplyList" class="list"></div>
+      </section>
+
+      <section id="wishlist" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Planejamento</p>
+            <h2>Lista de desejos</h2>
+          </div>
+          <button class="icon-button" data-open="wishDialog" aria-label="Adicionar desejo">+</button>
+        </div>
+        <div id="wishList" class="list"></div>
+      </section>
+
+      <section id="calendar" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Arena Leao Carpina</p>
+            <h2>Calendario</h2>
+          </div>
+          <button class="icon-button" data-open="eventDialog" aria-label="Adicionar evento">+</button>
+        </div>
+        <div class="calendar-card">
+          <div class="calendar-title">
+            <button id="prevMonth" class="ghost-button" aria-label="Mes anterior">&lsaquo;</button>
+            <strong id="monthLabel"></strong>
+            <button id="nextMonth" class="ghost-button" aria-label="Proximo mes">&rsaquo;</button>
+          </div>
+          <div class="weekdays">
+            <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+        </div>
+        <div id="eventList" class="list compact"></div>
+      </section>
+    </main>
+
+    <dialog id="itemDialog">
+      <form id="itemForm" method="dialog" class="dialog-card">
+        <h3>Novo equipamento</h3>
+        <input name="name" required placeholder="Nome do item" />
+        <input name="brand" placeholder="Marca / modelo" />
+        <select name="category" required>
+          <option>AEG</option>
+          <option>GBB</option>
+          <option>Spring</option>
+          <option>Protecao</option>
+          <option>Vestuario</option>
+          <option>Acessorio</option>
+          <option>Ferramenta</option>
+        </select>
+        <input name="image" placeholder="URL da imagem ou deixe para buscar depois" />
+        <textarea name="notes" placeholder="Observacoes, upgrades, bateria, magazine..."></textarea>
+        <div class="dialog-actions">
+          <button type="button" class="ghost-button" data-close-dialog>Cancelar</button>
+          <button type="submit" value="default" class="primary-button">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="supplyDialog">
+      <form id="supplyForm" method="dialog" class="dialog-card">
+        <h3>Novo suprimento</h3>
+        <input name="name" required placeholder="BBs, gas, mola, o-ring..." />
+        <input name="quantity" required type="number" min="0" placeholder="Quantidade" />
+        <input name="minimum" required type="number" min="0" placeholder="Minimo desejado" />
+        <select name="type">
+          <option>Suprimento</option>
+          <option>Peca de reposicao</option>
+          <option>Consumivel</option>
+        </select>
+        <div class="dialog-actions">
+          <button type="button" class="ghost-button" data-close-dialog>Cancelar</button>
+          <button type="submit" value="default" class="primary-button">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="wishDialog">
+      <form id="wishForm" method="dialog" class="dialog-card">
+        <h3>Novo desejo</h3>
+        <input name="name" required placeholder="Item desejado" />
+        <input name="budget" placeholder="Orcamento estimado" />
+        <select name="priority">
+          <option>Alta</option>
+          <option>Media</option>
+          <option>Baixa</option>
+        </select>
+        <div class="dialog-actions">
+          <button type="button" class="ghost-button" data-close-dialog>Cancelar</button>
+          <button type="submit" value="default" class="primary-button">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="eventDialog">
+      <form id="eventForm" method="dialog" class="dialog-card">
+        <h3>Novo compromisso</h3>
+        <input name="title" required placeholder="Nome do evento" />
+        <input name="date" required type="date" />
+        <select name="type">
+          <option>Jogo</option>
+          <option>Ranger - Arena Leao Carpina</option>
+          <option>Manutencao</option>
+        </select>
+        <textarea name="notes" placeholder="Horario, loadout, observacoes..."></textarea>
+        <div class="dialog-actions">
+          <button type="button" class="ghost-button" data-close-dialog>Cancelar</button>
+          <button type="submit" value="default" class="primary-button">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "MCM Arsenal",
+  "short_name": "MCM",
+  "description": "Inventario de airsoft, estoque, desejos e calendario da equipe MCM.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#10140f",
+  "theme_color": "#10140f",
+  "orientation": "portrait",
+  "categories": ["productivity", "sports"],
+  "icons": []
+}
